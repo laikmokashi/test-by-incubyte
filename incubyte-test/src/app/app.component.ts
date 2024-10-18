@@ -30,7 +30,22 @@ export class AppComponent {
     }
 
     let delimiter = ',';
-   
+    const lines = numbers.split('\n');
+
+    // Check for custom delimiter
+    if (lines[0].startsWith('//')) {
+      delimiter = lines[0][2]; // Extract custom delimiter
+      numbers = lines.slice(1).join(''); // Remove the delimiter definition line
+    } else {
+      if(lines && lines.length>1){
+        numbers = lines.join('');
+      }else{
+        numbers = lines[0]
+      }
+    }
+
+    // Replace newlines with the current delimiter
+    numbers = numbers.replaceAll(/\\n/g, delimiter);
     const numList = numbers.split(delimiter);
     let total = 0;
     const negatives: number[] = [];

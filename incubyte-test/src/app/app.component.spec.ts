@@ -63,4 +63,13 @@ describe('AppComponent (Basic)', () => {
     expect(component.add('   1,2,3   ')).toEqual(6);
   });
 
+  // Should handle new lines as a delimiter
+  it('should return the sum of numbers separated by a newline', () => {
+    expect(component.add('1\\n2,3')).toEqual(6);
+  });
+  
+  // Custom delimiter should work as expected
+  it('should support custom delimiter specified in the input', () => {
+    expect(component.add('//;\n1;2;3')).toEqual(6);
+  });
 });
