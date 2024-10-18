@@ -1,31 +1,36 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
-describe('AppComponent', () => {
+describe('AppComponent (Basic)', () => {
+  let component: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent]
     }).compileComponents();
+
+    const fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  // Empty input should return 0
+  it('should return 0 for an empty string', () => {
+    expect(component.add('')).toEqual(0);
   });
 
-  it(`should have as title 'incubyte-test'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('incubyte-test');
+  // Single number input should return the same number
+  it('should return the number itself for a single number input', () => {
+    expect(component.add('5')).toEqual(5);
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('incubyte-test app is running!');
+  // Sum of two numbers separated by commas
+  it('should return the sum of two numbers separated by commas', () => {
+    expect(component.add('1,2')).toEqual(3);
   });
+
+  // Should throw an error when negative numbers are present
+  it('should throw an error for negative numbers', () => {
+    expect(() => component.add('1,-2,3')).toThrowError('Negative numbers not allowed: -2');
+  });
+
 });
