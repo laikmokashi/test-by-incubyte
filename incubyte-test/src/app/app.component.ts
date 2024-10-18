@@ -36,13 +36,18 @@ export class AppComponent {
     const negatives: number[] = [];
 
     for (const num of numList) {
-        const value = parseInt(num);
+      const trimmedNum = num.trim();
+      if (trimmedNum) {
+        const value = parseInt(trimmedNum, 10);
+        if (isNaN(value)) {
+          continue; // Ignore non-numeric values
+        }
         if (value < 0) {
           negatives.push(value);
         } else {
           total += value;
         }
-      
+      }
     }
 
     if (negatives.length > 0) {

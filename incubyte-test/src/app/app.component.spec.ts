@@ -33,4 +33,34 @@ describe('AppComponent (Basic)', () => {
     expect(() => component.add('1,-2,3')).toThrowError('Negative numbers not allowed: -2');
   });
 
+  // Should ignore non-numeric characters and spaces
+  it('should ignore non-numeric values and return the sum of valid numbers', () => {
+    expect(component.add('1, 2, abc, 3')).toEqual(6);
+  });
+
+  // Should handle input with spaces around the numbers
+  it('should trim and sum numbers correctly with spaces around them', () => {
+    expect(component.add('  1  ,  2  ,  3  ')).toEqual(6);
+  });
+
+  // Should ignore empty values between commas
+  it('should handle empty values between commas', () => {
+    expect(component.add('1,,2,3')).toEqual(6);
+  });
+
+  // Should handle a mix of numbers and non-numeric characters
+  it('should sum numbers and ignore non-numeric characters in the input', () => {
+    expect(component.add('1,a,3,b,4')).toEqual(8);
+  });
+
+  // Input with only non-numeric characters should return 0
+  it('should return 0 when input contains only non-numeric characters', () => {
+    expect(component.add('abc,xyz')).toEqual(0);
+  });
+
+  // Should handle leading and trailing spaces in the input
+  it('should handle leading and trailing spaces in the input string', () => {
+    expect(component.add('   1,2,3   ')).toEqual(6);
+  });
+
 });
